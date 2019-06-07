@@ -4,7 +4,7 @@ metadata:
   name: {{pod_name}}
   namespace: {{meta.namespace}}
   labels:
-    app: hello
+    app: {{ meta.name }}
 spec:
   containers:
   - name: hello
@@ -17,18 +17,3 @@ spec:
     env:
       - name: GREETING
         value: {{greeting}}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{meta.name}}
-  namespace: {{meta.namespace}}
-spec:
-  selector:
-    app: {{meta.name}}
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
-  type: NodePort

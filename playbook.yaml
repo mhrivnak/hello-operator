@@ -1,6 +1,6 @@
 - hosts: all
   vars:
-    size: 1
+    size: 4
     greeting: Hello
     meta:
       name: example-hello
