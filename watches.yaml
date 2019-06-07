@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: hello.example.com
+  kind: Hello
+  role: /home/mhrivnak/git/hello-service/hello-operator/roles/hello

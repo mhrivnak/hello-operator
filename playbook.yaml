@@ -1,0 +1,10 @@
+- hosts: all
+  vars:
+    size: 1
+    greeting: Hello
+    meta:
+      name: example-hello
+      namespace: default
+  roles:
+    - hello
+

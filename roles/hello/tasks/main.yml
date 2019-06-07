@@ -1,0 +1,21 @@
+---
+- name: lookup pods
+  set_fact:
+    hello_pods: "{{ lookup('k8s', api_version='v1', kind='Pod', namespace=meta.namespace,
+                      label_selector='app=hello', field_selector='status.phase=Running', wantlist=True ) }}"
+
+- name: add pod
+  vars:
+    pod_name: "{{ meta.name }}-{{ lookup('password', '/dev/null length=5 chars=ascii_letters') | lower }}"
+  k8s:
+    definition: "{{ lookup('template', 'hello.yaml.j2') }}"
+  when: hello_pods | length < size | int
+
+- name: remove pod
+  vars:
+    pod_name: "{{ item.metadata.name }}"
+  k8s:
+    definition: "{{ lookup('template', 'hello.yaml.j2') }}"
+    state: absent
+  when: hello_pods | length > size | int
+  with_random_choice: "{{ hello_pods }}"
